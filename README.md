@@ -104,8 +104,9 @@ $$
 We retain a document only if it exceeds a strict relevance threshold:
 
 $$
-E_{\text{std}}=\left\lbrace\phi(e)\;\mid\; e\in E_{\text{raw}} \ \wedge\ \forall e'\in E_{\text{raw}},\ \phi(e')\neq\emptyset\right\rbrace.
+D_{\text{relevant}}(p_i)=\{\, d \in D_{\text{candidate}}(p_i) \mid f_{\theta}(d,p_i)\ge \alpha \,\}.
 $$
+
 
 In this work, we set $\alpha = 8$ to prioritize articles in which the target pathway is central and supported by explicit molecular and regulatory evidence.
 
@@ -132,6 +133,8 @@ To improve benchmark quality, we discard a candidate document if any entity cann
 $$
 E_{\text{std}}=\left\{\phi(e)\;\mid\; e\in E_{\text{raw}} \ \wedge\ \forall e'\in E_{\text{raw}},\ \phi(e')\neq\emptyset\right\}.
 $$
+
+------
 
 ### Phase III: Knowledge Structuring and Validation
 
