@@ -85,17 +85,15 @@ $$
 where $f_{\theta}$ aggregates multiple biologically motivated dimensions:
 
 $$
-f_{\theta}(d, p_i)
-= g_{\theta}\bigl(\mathbf{S}\bigr), \quad
-\mathbf{S} =
-\left(
-\begin{array}{c}
-S_{\text{subj}} \
-S_{\text{spec}} \
-S_{\text{mol}} \
+f_{\theta}(d, p_i)=g_{\theta}(\mathbf{S}),
+\qquad
+\mathbf{S}=
+\begin{bmatrix}
+S_{\text{subj}}\\
+S_{\text{spec}}\\
+S_{\text{mol}}\\
 S_{\text{ctx}}
-\end{array}
-\right).
+\end{bmatrix}.
 $$
 
 - $S_{\text{subj}}$ measures whether the pathway’s biological process is the primary focus of the article, as opposed to a background mention.
@@ -106,7 +104,9 @@ $$
 We retain a document only if it exceeds a strict relevance threshold:
 
 $$
-D_{\text{relevant}}(p_i)=\left\{ d\in D_{\text{candidate}}(p_i)\;\middle|\; f_{\theta}(d,p_i)\ge \alpha \right\}.
+D_{\text{relevant}}(p_i)
+=
+\{\, d \in D_{\text{candidate}}(p_i) \mid f_{\theta}(d, p_i) \ge \alpha \,\}.
 $$
 
 In this work, we set $\alpha = 8$ to prioritize articles in which the target pathway is central and supported by explicit molecular and regulatory evidence.
@@ -132,7 +132,7 @@ To ensure interoperability with external biological resources, we normalize each
 To improve benchmark quality, we discard a candidate document if any entity cannot be resolved to a valid identifier. Only documents for which all entities are successfully normalized are retained, yielding the standardized entity set:
 
 $$
-E_{\text{std}}=\left\{\phi(e)\;\middle|\; e\in E_{\text{raw}} \ \wedge\ \forall e'\in E_{\text{raw}},\ \phi(e')\neq\emptyset\right\}.
+E_{\text{std}}=\left\{\phi(e)\;\mid\; e\in E_{\text{raw}} \ \wedge\ \forall e'\in E_{\text{raw}},\ \phi(e')\neq\emptyset\right\}.
 $$
 
 ------
@@ -212,12 +212,11 @@ For generated explanations, we adopt a multi-dimensional evaluation strategy:
 
 1. **LLM-as-a-Judge**: We use **Qwen3-32B** as the judge model. Given the ground-truth mechanism text $M_{\text{text}}$, it scores the generated explanation $\hat{Y}$ on four dimensions (1–5): **Phenotype Coverage**, **Causal Reasoning**, **Factuality**, and **Hallucination Control**.
 
-2. **Structured Knowledge Evaluation**: Based on the literature-derived knowledge graph, we adopt a closed-set protocol. We use **Qwen3-32B** as the extractor model and only allow tuples selected from the standardized knowledge graph to support $\hat{Y}$, ensuring $\mathcal{T}_{\text{pred}} \subseteq \mathcal{T}_{\text{GT}}$. Factual completeness is measured via **Coverage**:
-   
+2. **Structured Knowledge Evaluation**: Based on the literature-derived knowledge graph, we adopt a closed-set protocol. We use **Qwen3-32B** as the extractor model and only allow tuples selected from the standardized knowledge graph to support $\hat{Y}$, ensuring $$\mathcal{T}_{\text{pred}} \subseteq \mathcal{T}_{\text{GT}}$$. Factual completeness is measured via **Coverage**:
 $$
 \text{Coverage} = \frac{|\mathcal{T}_{\text{pred}}|}{|\mathcal{T}_{\text{GT}}|}
 $$
-   
+
 3. **Semantic Embedding Similarity**: We compute cosine similarity between vector embeddings of $\hat{Y}$ and the reference mechanism text $M_{\text{text}}$.
 
 ## 📊 Experimental Results
