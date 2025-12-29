@@ -47,9 +47,11 @@ BIOME-Bench transforms pathway information and literature evidence into a struct
 ### Phase I: Literature Retrieval and Relevance Filtering
 
 To ensure strong biological validity, the construction process begins with a rigorous literature acquisition stage. Let
+
 $$
 \mathcal{P} = {p_1, p_2, \dots, p_n}
 $$
+
 denote a predefined set of target KEGG pathways. Each pathway $p_i$ is characterized by its pathway name $N_{p_i}$ and associated species $S_{p_i}$.
 
 #### MeSH-guided Literature Retrieval
@@ -57,13 +59,17 @@ denote a predefined set of target KEGG pathways. Each pathway $p_i$ is character
 For each pathway $p_i$, we perform a structured literature search on the PubMed database using Medical Subject Headings (MeSH)  to improve recall precision and semantic consistency. Specifically, the pathway name $N_{p_i}$ is mapped to a set of MeSH descriptors, denoted as $\mathrm{MeSH}(N_{p_i})$, and the species $S_{p_i}$ is mapped to the corresponding MeSH organism term, denoted as $\mathrm{MeSH}(S_{p_i})$.
 
 The final PubMed query is constructed as a conjunction of pathway-related MeSH terms and species constraints:
+
 $$
 Q(p_i) = \mathrm{MeSH}(N_{p_i}) \wedge \mathrm{MeSH}(S_{p_i}).
 $$
+
 Executing $Q(p_i)$ yields an initial candidate document set:
+
 $$
 D_{\text{candidate}}(p_i) = \{ d_1, d_2, \dots, d_m \},
 $$
+
 where each document $d_j$ is indexed by PubMed and annotated with curated MeSH terms.
 
 #### LLM-based Semantic and Mechanistic Relevance Scoring
@@ -71,10 +77,13 @@ where each document $d_j$ is indexed by PubMed and annotated with curated MeSH t
 MeSH-guided retrieval yields a controlled, high-recall candidate set, but MeSH annotations alone do not ensure that an article contains pathway-specific mechanistic evidence. To identify literature suitable for mechanism-level benchmarking, we use an LLM-based semantic evaluator with parameters $\theta$.
 
 Given a document and pathway pair $(d, p_i)$, the evaluator assigns a relevance score
+
 $$
 s = f_{\theta}(d, p_i), \quad s \in [0,10],
 $$
+
 where $f_{\theta}$ aggregates multiple biologically motivated dimensions:
+
 $$
 f_{\theta}(d, p_i)
 = g_{\theta}\bigl(\mathbf{S}\bigr), \quad
@@ -95,9 +104,11 @@ $$
 - $S_{\text{ctx}}$ measures whether the article describes pathway regulation, such as activation, inhibition, or other modulatory effects, rather than merely reporting pathway presence.
 
 We retain a document only if it exceeds a strict relevance threshold:
+
 $$
 D_{\text{relevant}}(p_i)=\left\{ d\in D_{\text{candidate}}(p_i)\;\middle|\; f_{\theta}(d,p_i)\ge \alpha \right\}.
 $$
+
 In this work, we set $\alpha = 8$ to prioritize articles in which the target pathway is central and supported by explicit molecular and regulatory evidence.
 
 ------
@@ -119,6 +130,7 @@ To ensure interoperability with external biological resources, we normalize each
 - **Genes and proteins** are mapped to NCBI Gene identifiers or UniProt accessions via MyGene.info.
 
 To improve benchmark quality, we discard a candidate document if any entity cannot be resolved to a valid identifier. Only documents for which all entities are successfully normalized are retained, yielding the standardized entity set:
+
 $$
 E_{\text{std}}=\left\{\phi(e)\;\middle|\; e\in E_{\text{raw}} \ \wedge\ \forall e'\in E_{\text{raw}},\ \phi(e')\neq\emptyset\right\}.
 $$
@@ -132,17 +144,21 @@ This phase converts extracted mechanistic information into a fine-grained, state
 #### Interaction Quadruple Extraction
 
 We first extract the core interaction structure from $M_{\text{text}}$. Each interaction is represented as a quadruple:
+
 $$
 T_{\text{core}} = (e_s, r, e_t, c),
 $$
+
 where $e_s, e_t \in E_{\text{std}}$ denote the source and target entities, $r \in \mathcal{R}$ is a relation type drawn from a controlled biological vocabulary, and $c$ specifies the biological condition under which the interaction occurs.
 
 #### Biological State Annotation
 
 To capture dynamic molecular behavior, we further annotate entity-specific biological states. Let $\sigma_s$ and $\sigma_t$ denote the states of the source and target entities, respectively (e.g., mutated, overexpressed). Incorporating state information yields a state-aware hexaplet representation:
+
 $$
 T_{\text{final}} = (e_s, \sigma_s, r, e_t, \sigma_t, c).
 $$
+
 This formulation enables the benchmark to distinguish subtle yet critical mechanistic differences, such as changes in protein abundance versus post-translational modifications.
 
 #### Human Expert Verification
@@ -158,6 +174,7 @@ Based on the curated and validated knowledge representations, BIOME-Bench define
 #### Task A: Biomolecular Interaction Inference
 
 This task evaluates an LLM’s ability to infer precise molecular relationships within a pathway context. Given a pathway $p_i$, a source entity $e_s$ with state $\sigma_s$, a target entity $e_t$ with state $\sigma_t$, and a biological condition $c$, the model is required to predict the correct interaction relation from a finite controlled vocabulary $\mathcal{R}$:
+
 $$
 \hat{r} = \arg\max_{r \in \mathcal{R}} P\bigl(r \mid p_i, e_s, \sigma_s, e_t, \sigma_t, c\bigr).
 $$
@@ -165,9 +182,11 @@ $$
 #### Task B: Multi-Omics Pathway Mechanism Elucidation
 
 This task simulates realistic omics-driven pathway analysis scenarios. The model is provided with a pathway context $p_i$ and a set of differentially observed entities
+
 $$
 E_{\text{diff}} \subseteq E_{\text{std}},
 $$
+
 and is required to generate a coherent mechanistic explanation $\hat{Y}$ that elucidates the biological interactions, regulatory relationships, and molecular processes connecting these entities within the given pathway context.
 
 ## 📈 Benchmark Statistics
@@ -194,9 +213,10 @@ For generated explanations, we adopt a multi-dimensional evaluation strategy:
 1. **LLM-as-a-Judge**: We use **Qwen3-32B** as the judge model. Given the ground-truth mechanism text $M_{\text{text}}$, it scores the generated explanation $\hat{Y}$ on four dimensions (1–5): **Phenotype Coverage**, **Causal Reasoning**, **Factuality**, and **Hallucination Control**.
 
 2. **Structured Knowledge Evaluation**: Based on the literature-derived knowledge graph, we adopt a closed-set protocol. We use **Qwen3-32B** as the extractor model and only allow tuples selected from the standardized knowledge graph to support $\hat{Y}$, ensuring $\mathcal{T}_{\text{pred}} \subseteq \mathcal{T}_{\text{GT}}$. Factual completeness is measured via **Coverage**:
-   $$
-   \text{Coverage} = \frac{|\mathcal{T}_{\text{pred}}|}{|\mathcal{T}_{\text{GT}}|}
-   $$
+   
+$$
+\text{Coverage} = \frac{|\mathcal{T}_{\text{pred}}|}{|\mathcal{T}_{\text{GT}}|}
+$$
    
 3. **Semantic Embedding Similarity**: We compute cosine similarity between vector embeddings of $\hat{Y}$ and the reference mechanism text $M_{\text{text}}$.
 
