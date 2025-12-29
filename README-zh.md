@@ -92,7 +92,7 @@ $$
 
 此阶段将提取的机制信息转换为细粒度的知识图谱表示。
 
-- **核心四元组提取**：从 $M_{\text{text}}$ 提取核心结构 $T_{\text{core}} = (e_s, r, e_t, c)$，其中 $r$ 为受控词表中的关系类型，$c$ 为实验条件。
+- **核心四元组提取**：从 $M_{\text{text}}$ 提取核心结构 $T_{\text{core}} = (e_s, r, e_t, c)$，其中 $r$ 为受控词表中的关系类型， $c$ 为实验条件。
 
 - **生物状态标注**：引入源/目标实体的生物状态 $\sigma_s, \sigma_t$（如突变、过表达、磷酸化），构建**状态感知的六元组 (State-aware Hexaplet)**：
 
@@ -139,7 +139,7 @@ $$
 
 1. **LLM-as-a-Judge**: 使用 **Qwen3-32B** 作为裁判模型，根据 Ground Truth $M_{\text{text}}$ 对生成的解释 $\hat{Y}$ 在四个维度上进行评分（1-5 分）：**表型覆盖度 (Phenotype Coverage)**、**因果推理 (Causal Reasoning)**、**事实性 (Factuality)** 以及 **幻觉控制 (Hallucination Control)**。
 
-2. **结构化知识评估 (Structured Knowledge Evaluation)**: 基于文献派生的知识图谱，采用闭集评估协议。使用 **Qwen3-32B** 作为提取模型，仅允许从标准化知识图中选择元组来支撑解释 $\hat{Y}$，确保预测元组集 $\mathcal{T}_{\text{pred}} \subseteq \mathcal{T}_{\text{GT}}$ 。事实完整性通过 **Coverage** 衡量：
+2. **结构化知识评估 (Structured Knowledge Evaluation)**: 基于文献派生的知识图谱，采用闭集评估协议。使用 **Qwen3-32B** 作为提取模型，仅允许从标准化知识图中选择元组来支撑解释 $\hat{Y}$，确保预测元组集 $\mathcal{T}_{\text{pred}}\subseteq\mathcal{T}_{\text{GT}}$ 。事实完整性通过 **Coverage** 衡量：
 
 $$
 \text{Coverage} = \frac{|\mathcal{T}_{\text{pred}}|}{|\mathcal{T}_{\text{GT}}|}
