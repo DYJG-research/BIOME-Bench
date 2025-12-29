@@ -131,7 +131,7 @@ To ensure interoperability with external biological resources, we normalize each
 To improve benchmark quality, we discard a candidate document if any entity cannot be resolved to a valid identifier. Only documents for which all entities are successfully normalized are retained, yielding the standardized entity set:
 
 $$
-E_{\text{std}}=\left\{\phi(e)\;\mid\; e\in E_{\text{raw}} \ \wedge\ \forall e'\in E_{\text{raw}},\ \phi(e')\neq\emptyset\right\}.
+E_{\text{std}}=\left\lbrace \phi(e)\;\mid\; e\in E_{\text{raw}} \ \wedge\ \forall e'\in E_{\text{raw}},\ \phi(e')\neq\emptyset \right\rbrace.
 $$
 
 ------
