@@ -3,12 +3,13 @@
 **A Benchmark for Biomolecular Interaction Inference and Multi-Omics Pathway Mechanism Elucidation**
 
 <div align="center">
-  <img src="./imgs/logo.png" width="48% biological-atom" /> <br/>
+  <img src="imgs/logo.png" width="48% biological-atom" /> <br/>
     <span>*Logo由Nano Banana生成</span>
 </div>
 <p align="center">
     <b>🌐 Language:</b> 中文 | <a href="README.md">English</a>
 </p>
+
 
 
 ## 🌟 简介
@@ -18,8 +19,9 @@
 在多组学研究中，研究者通常采用通路富集分析（Pathway Enrichment Analysis）来解释复杂的分子变化。如下图所示：
 
 <div align="center">
-  <img src="./imgs/pathway_analysis_pipeline.svg" width="48% biological-atom" />
+  <img src="imgs/pathway_analysis_pipeline.svg" width="48% biological-atom" />
 </div>
+
 
 
 然而，这种传统的富集分析法面临着几个关键的瓶颈：
@@ -35,8 +37,9 @@
 下图展示了我们从文献中构建这一基准测试的核心工作流：
 
 <div align="center">
-  <img src="./imgs/workflow.svg" width="80% biological-atom" />
+  <img src="imgs/workflow.svg" width="80% biological-atom" />
 </div>
+
 
 
 ## 🏗️ 数据构建方法
@@ -80,7 +83,7 @@ $$
 
 ### 阶段 II：信息提取与实体标准化 (Information Extraction and Entity Standardization)
 
-- **基于 LLM 的机制提取**： 对于 $D_{\text{relevant}}(p_i)$ 中的每个文档 $d$，利用 LLM 提取原始实体集 $E_{\text{raw}}$（包括化学品、基因/蛋白质和表型）以及连贯的自然语言机制描述 $M_{\text{text}}$。
+- **基于 LLM 的机制提取**： 对于 $D_{\text{relevant}}(p_i)$ 中的每个文档 $d$，利用 LLM 提取原始实体（包括化学品、基因/蛋白质和表型）集 $E_{\text{raw}}$ 以及连贯的自然语言机制描述 $M_{\text{text}}$。
 
 - **实体归一化与本体映射**： 为了确保与外部资源的互操作性，利用解析函数 $\phi(e)$ 将 $E_{\text{raw}}$ 映射至规范标识符（化学品映射至 PubChem CID，基因/蛋白质映射至 NCBI Gene ID/UniProt ID）。仅保留所有实体均能成功标准化的文档：
 
@@ -221,8 +224,9 @@ $$
 Qwen3-32B 评测模型（judge）对语义扰动的敏感性如下图所示。图中记录了改写（rewrite）与扰动（perturb）后的得分。Drop% 表示从改写到扰动后的得分相对下降百分比：
 
 <div align="center">
-  <img src="./imgs/llm_as_a_judge.svg" width="48% biological-atom" />
+  <img src="imgs/llm_as_a_judge.svg" width="48% biological-atom" />
 </div>
+
 
 图中结果验证了LLM-as-a-Judge的有效性。
 
@@ -231,8 +235,9 @@ Qwen3-32B 评测模型（judge）对语义扰动的敏感性如下图所示。�
 
 
 <div align="center">
-  <img src="./imgs/kg_relation_confusion_matrix.svg" width="45% biological-atom" />
+  <img src="imgs/kg_relation_confusion_matrix.svg" width="45% biological-atom" />
 </div>
+
 
 图中结果表明：模型倾向于将精细的生物机制误判为粗粒度的因果或调节关系（如 `leads_to`），且难以准确区分直接调节与通路层面的因果联系。这种对模糊关系的过度解读（如将 `regulates` 极化）以及细粒度辨析能力的缺失，反映了当前模型在处理复杂生物逻辑时的局限性。
 
