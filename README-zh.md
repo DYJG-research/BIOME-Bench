@@ -53,7 +53,7 @@ $$
 Q(p_i) = \mathrm{MeSH}(N_{p_i}) \wedge \mathrm{MeSH}(S_{p_i}).
 $$
 
-执行 $Q(p_i)$ 得到初始候选文档集 $D_{\text{candidate}}(p_i) = \lbrace d_1, d_2, \dots, d_m \rbrace$。
+  执行 $Q(p_i)$ 得到初始候选文档集 $D_{\text{candidate}}(p_i) = \lbrace d_1, d_2, \dots, d_m \rbrace$。
 
 - **基于 LLM 的语义与机制相关性评分**： MeSH 引导的检索虽然保证了高召回率，但 MeSH 注释本身不能确保文章包含通路特定的机制证据。我们使用参数为 $\theta$ 的 LLM 评估器为文档-通路对 $(d, p_i)$ 分配相关性分数 $s \in [0, 10]$：
 
@@ -69,7 +69,7 @@ S_{\text{ctx}}
 \end{bmatrix}.
 $$
 
-其中 $\mathbf{S}$ 包含四个维度的评分：
+  其中 $\mathbf{S}$ 包含四个维度的评分：
 
   - **通路主体聚焦度 (**$S_{\text{subj}}$**)**：评估文章是否将通路的生物过程作为主要研究对象。
   - **物种一致性 (**$S_{\text{spec}}$**)**：评估研究物种是否匹配，并考虑模式生物的关联性。
@@ -139,10 +139,10 @@ $$
 
 1. **LLM-as-a-Judge**: 使用 **Qwen3-32B** 作为裁判模型，根据 Ground Truth $M_{\text{text}}$ 对生成的解释 $\hat{Y}$ 在四个维度上进行评分（1-5 分）：**表型覆盖度 (Phenotype Coverage)**、**因果推理 (Causal Reasoning)**、**事实性 (Factuality)** 以及 **幻觉控制 (Hallucination Control)**。
 
-2. **结构化知识评估 (Structured Knowledge Evaluation)**: 基于文献派生的知识图谱，采用闭集评估协议。使用 **Qwen3-32B** 作为提取模型，仅允许从标准化知识图中选择元组来支撑解释 $\hat{Y}$，确保预测元组集 $\mathcal{T}_{\text{pred}}\subseteq\mathcal{T}_{\text{GT}}$ 。事实完整性通过 **Coverage** 衡量：
+2. **结构化知识评估 (Structured Knowledge Evaluation)**: 基于文献派生的知识图谱，采用闭集评估协议。使用 **Qwen3-32B** 作为提取模型，仅允许从标准化知识图中选择元组来支撑解释 $\hat{Y}$ 。事实完整性通过 **Coverage** 衡量：
 
 $$
-\text{Coverage} = \frac{|\mathcal{T}_{\text{pred}}|}{|\mathcal{T}_{\text{GT}}|}
+\text{Coverage} = \frac{|\mathcal{T}_{\text{pred}}|}{|\mathcal{T}_{\text{GT}}|}, \mathcal{T}_{\text{pred}}\subseteq\mathcal{T}_{\text{GT}}
 $$
 
 3. **语义嵌入相似度 (Semantic Embedding Similarity)**: 计算生成解释 $\hat{Y}$ 与标准机制文本 $M_{\text{text}}$ 向量表示之间的余弦相似度。
