@@ -1,0 +1,31 @@
+{
+  "rules": [
+    {
+      "match_contains": ["qwen3"],
+      "when_no_think": {
+        "prompt_prefix": "\\no_think"
+      }
+    },
+    {
+      "match_contains": ["gemini"],
+      "when_no_think": {
+        "request_params": {
+          "thinking_level": "low"
+        }
+      }
+    },
+    {
+      "match_contains": ["intern-s1"],
+      "when_no_think": {
+        "request_params": {
+          "thinking_mode": false
+        }
+      },
+      "when_think": {
+        "request_params": {
+          "thinking_mode": true
+        }
+      }
+    }
+  ]
+}

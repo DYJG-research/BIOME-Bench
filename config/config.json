@@ -1,0 +1,43 @@
+{
+  "EvalModel": {
+    "api_config": {
+      "model": "",
+      "base_url": "",
+      "api_key": "",
+      "timeout": 60,
+      "max_retries": 10,
+      "retry_delay": 5.0
+    },
+    "generation_config": {
+      "temperature": 0.0,
+      "max_tokens": 10240,
+      "no_think": false,
+      "thinking_rules_file": "config/thinking_rules.json"
+    },
+    "save_every": 0
+  },
+  "JudgeModel": {
+    "api_config": {
+      "model": "",
+      "base_url": "",
+      "api_key": "",
+      "max_retries": 10,
+      "retry_delay": 5.0,
+      "timeout": 60
+    },
+    "generation_config": {
+      "max_tokens": 10240,
+      "temperature": 0.0
+    }
+  },
+  "EmbedModel": {
+    "api_config": {
+      "model": "",
+      "base_url": "",
+      "api_key": "",
+      "max_retries": 10,
+      "retry_delay": 5.0,
+      "timeout": 60
+    }
+  }
+}

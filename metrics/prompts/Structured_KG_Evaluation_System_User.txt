@@ -1,0 +1,12 @@
+/no_think
+# Task Data
+
+## 1. Mechanism Analysis Text (Evidence)
+{text}
+
+## 2. Reference Relations (Candidate List)
+Please check the following relations one by one. Does the text above support them?
+{relation_list_str}
+
+# Instruction
+Analyze the text and output the JSON object containing the IDs of all supported relations.

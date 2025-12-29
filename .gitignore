@@ -1,0 +1,28 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.venv
+env.bak/
+venv.bak/
+
+# Outputs
+outputs/
+*.log
+stall_diagnostics.log
+
+# System
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Testing
+.pytest_cache/
+htmlcov/

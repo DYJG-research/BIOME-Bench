@@ -1,0 +1,26 @@
+/no_think
+# Task Data
+
+## 1. Multi-Omics Pathway Mechanism Elucidation Question
+{query}
+
+## 2. Target Processes & Phenotypes (Hidden Goals)
+*The model was expected to derive the following outcomes based on the drivers (used for "Phenotype Coverage" scoring):*
+{target_phenotypes_str}
+
+## 4. Reference Answer (Ground Truth)
+{ground_truth_text}
+
+## 5. Model Output (Prediction to Evaluate)
+{model_prediction_text}
+
+# Evaluation Instruction
+Please evaluate the **Model Output** based on the System Prompt's rubric.
+
+**Step-by-step procedure:**
+1. **Check Coverage**: Did the model mention the concepts listed in "Target Processes & Phenotypes"?
+2. **Check Logic**: Is there a causal chain connecting "Input Drivers" to these phenotypes?
+3. **Check Factuality**: Are the interaction directions (activate/inhibit) consistent with the "Reference Answer"?
+4. **Check Hallucination**: Did the model invent entities NOT listed in "Input Drivers" or "Pathway Context"?
+
+**Output**: Provide the JSON object with the "critique" and "scores".
