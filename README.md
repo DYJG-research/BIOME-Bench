@@ -104,7 +104,7 @@ $$
 We retain a document only if it exceeds a strict relevance threshold:
 
 $$
-D_{\text{relevant}}(p_i)=\lbrace \, d \in D_{\text{candidate}}(p_i) \mid f_{\theta}(d,p_i)\ge \alpha \,\rbrace.
+D_{\text{relevant}}(p_i)=\lbrace d \in D_{\text{candidate}}(p_i) \mid f_{\theta}(d,p_i)\ge \alpha \rbrace.
 $$
 
 
@@ -211,7 +211,7 @@ For generated explanations, we adopt a multi-dimensional evaluation strategy:
 
 1. **LLM-as-a-Judge**: We use **Qwen3-32B** as the judge model. Given the ground-truth mechanism text $M_{\text{text}}$, it scores the generated explanation $\hat{Y}$ on four dimensions (1–5): **Phenotype Coverage**, **Causal Reasoning**, **Factuality**, and **Hallucination Control**.
 
-2. **Structured Knowledge Evaluation**: Based on the literature-derived knowledge graph, we adopt a closed-set protocol. We use **Qwen3-32B** as the extractor model and only allow tuples selected from the standardized knowledge graph to support $\hat{Y}$, ensuring $$\mathcal{T}_{\text{pred}} \subseteq \mathcal{T}_{\text{GT}}$$. Factual completeness is measured via **Coverage**:
+2. **Structured Knowledge Evaluation**: Based on the literature-derived knowledge graph, we adopt a closed-set protocol. We use **Qwen3-32B** as the extractor model and only allow tuples selected from the standardized knowledge graph to support $\hat{Y}$, ensuring $\mathcal{T}_{\text{pred}} \subseteq \mathcal{T}_{\text{GT}}$ . Factual completeness is measured via **Coverage**:
 
 $$
 \text{Coverage} = \frac{|\mathcal{T}_{\text{pred}}|}{|\mathcal{T}_{\text{GT}}|}
