@@ -45,7 +45,7 @@ BIOME-Bench 的数据构建工作流将通路信息与文献证据转化为结�
 
 ### 阶段 I：文献检索与相关性过滤 (Literature Retrieval and Relevance Filtering)
 
-为了确保生物学有效性，构建过程始于严谨的文献获取。令 $\mathcal{P} = \{p_1, p_2, \dots, p_n\}$ 表示预定义的 KEGG 通路集。每个通路 $p_i$ 由其名称 $N_{p_i}$ 和关联物种 $S_{p_i}$ 定义。
+为了确保生物学有效性，构建过程始于严谨的文献获取。令 $\mathcal{P} = \lbrace p_1, p_2, \dots, p_n\rbrace$ 表示预定义的 KEGG 通路集。每个通路 $p_i$ 由其名称 $N_{p_i}$ 和关联物种 $S_{p_i}$ 定义。
 
 - **MeSH 引导的文献检索**： 为每个通路 $p_i$，我们在 PubMed 数据库上使用医学主题词（MeSH）进行结构化检索，以提高召回精度和语义一致性。最终的 PubMed 查询构造为通路相关 MeSH 术语与物种限制的交集：
 
@@ -53,7 +53,7 @@ $$
 Q(p_i) = \mathrm{MeSH}(N_{p_i}) \wedge \mathrm{MeSH}(S_{p_i}).
 $$
 
-执行 $Q(p_i)$ 得到初始候选文档集 $D_{\text{candidate}}(p_i) = \{ d_1, d_2, \dots, d_m \}$。
+执行 $Q(p_i)$ 得到初始候选文档集 $D_{\text{candidate}}(p_i) = \lbrace d_1, d_2, \dots, d_m \rbrace$。
 
 - **基于 LLM 的语义与机制相关性评分**： MeSH 引导的检索虽然保证了高召回率，但 MeSH 注释本身不能确保文章包含通路特定的机制证据。我们使用参数为 $\theta$ 的 LLM 评估器为文档-通路对 $(d, p_i)$ 分配相关性分数 $s \in [0, 10]$：
 

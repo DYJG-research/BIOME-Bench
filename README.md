@@ -49,7 +49,7 @@ BIOME-Bench transforms pathway information and literature evidence into a struct
 To ensure strong biological validity, the construction process begins with a rigorous literature acquisition stage. Let
 
 $$
-\mathcal{P} = \{p_1, p_2, \dots, p_n\}
+\mathcal{P} = \lbrace p_1, p_2, \dots, p_n \rbrace
 $$
 
 denote a predefined set of target KEGG pathways. Each pathway $p_i$ is characterized by its pathway name $N_{p_i}$ and associated species $S_{p_i}$.
@@ -67,7 +67,7 @@ $$
 Executing $Q(p_i)$ yields an initial candidate document set:
 
 $$
-D_{\text{candidate}}(p_i) = \{ d_1, d_2, \dots, d_m \},
+D_{\text{candidate}}(p_i) = \lbrace d_1, d_2, \dots, d_m \rbrace,
 $$
 
 where each document $d_j$ is indexed by PubMed and annotated with curated MeSH terms.
@@ -104,7 +104,7 @@ $$
 We retain a document only if it exceeds a strict relevance threshold:
 
 $$
-D_{\text{relevant}}(p_i)=\{\, d \in D_{\text{candidate}}(p_i) \mid f_{\theta}(d,p_i)\ge \alpha \,\}.
+D_{\text{relevant}}(p_i)=\lbrace \, d \in D_{\text{candidate}}(p_i) \mid f_{\theta}(d,p_i)\ge \alpha \,\rbrace.
 $$
 
 
