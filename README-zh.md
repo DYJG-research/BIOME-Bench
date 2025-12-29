@@ -48,26 +48,28 @@ BIOME-Bench 的数据构建工作流将通路信息与文献证据转化为结�
 为了确保生物学有效性，构建过程始于严谨的文献获取。令 $\mathcal{P} = \{p_1, p_2, \dots, p_n\}$ 表示预定义的 KEGG 通路集。每个通路 $p_i$ 由其名称 $N_{p_i}$ 和关联物种 $S_{p_i}$ 定义。
 
 - **MeSH 引导的文献检索**： 为每个通路 $p_i$，我们在 PubMed 数据库上使用医学主题词（MeSH）进行结构化检索，以提高召回精度和语义一致性。最终的 PubMed 查询构造为通路相关 MeSH 术语与物种限制的交集：
-  $$
-  Q(p_i) = \mathrm{MeSH}(N_{p_i}) \;\wedge\; \mathrm{MeSH}(S_{p_i})
-  $$
-  执行 $Q(p_i)$ 得到初始候选文档集 $D_{\text{candidate}}(p_i) = \{ d_1, d_2, \dots, d_m \}$。
+
+$$
+Q(p_i) = \mathrm{MeSH}(N_{p_i}) \wedge \mathrm{MeSH}(S_{p_i}).
+$$
+
+执行 $Q(p_i)$ 得到初始候选文档集 $D_{\text{candidate}}(p_i) = \{ d_1, d_2, \dots, d_m \}$。
 
 - **基于 LLM 的语义与机制相关性评分**： MeSH 引导的检索虽然保证了高召回率，但 MeSH 注释本身不能确保文章包含通路特定的机制证据。我们使用参数为 $\theta$ 的 LLM 评估器为文档-通路对 $(d, p_i)$ 分配相关性分数 $s \in [0, 10]$：
-  $$
-  f_{\theta}(d, p_i)
-  = g_{\theta}\bigl(\mathbf{S}\bigr), \quad
-  \mathbf{S} =
-  \left(
-  \begin{array}{c}
-  S_{\text{subj}} \
-  S_{\text{spec}} \
-  S_{\text{mol}} \
-  S_{\text{ctx}}
-  \end{array}
-  \right).
-  $$
-  其中 $\mathbf{S}$ 包含四个维度的评分：
+
+$$
+f_{\theta}(d, p_i)=g_{\theta}(\mathbf{S}),
+\qquad
+\mathbf{S}=
+\begin{bmatrix}
+S_{\text{subj}}\\
+S_{\text{spec}}\\
+S_{\text{mol}}\\
+S_{\text{ctx}}
+\end{bmatrix}.
+$$
+
+其中 $\mathbf{S}$ 包含四个维度的评分：
 
   - **通路主体聚焦度 (**$S_{\text{subj}}$**)**：评估文章是否将通路的生物过程作为主要研究对象。
   - **物种一致性 (**$S_{\text{spec}}$**)**：评估研究物种是否匹配，并考虑模式生物的关联性。
@@ -81,9 +83,10 @@ BIOME-Bench 的数据构建工作流将通路信息与文献证据转化为结�
 - **基于 LLM 的机制提取**： 对于 $D_{\text{relevant}}(p_i)$ 中的每个文档 $d$，利用 LLM 提取原始实体集 $E_{\text{raw}}$（包括化学品、基因/蛋白质和表型）以及连贯的自然语言机制描述 $M_{\text{text}}$。
 
 - **实体归一化与本体映射**： 为了确保与外部资源的互操作性，利用解析函数 $\phi(e)$ 将 $E_{\text{raw}}$ 映射至规范标识符（化学品映射至 PubChem CID，基因/蛋白质映射至 NCBI Gene ID/UniProt ID）。仅保留所有实体均能成功标准化的文档：
-  $$
-  E_{\text{std}} = \{ \phi(e) \mid e \in E_{\text{raw}} \wedge \forall e' \in E_{\text{raw}}, \phi(e') \neq \emptyset \}
-  $$
+
+$$
+E_{\text{std}}=\left\lbrace \phi(e)\mid e\in E_{\text{raw}} \wedge \forall e'\in E_{\text{raw}},\ \phi(e')\neq\emptyset \right\rbrace
+$$
 
 ### 阶段 III：知识结构化与校验 (Knowledge Structuring and Validation)
 
@@ -93,9 +96,11 @@ BIOME-Bench 的数据构建工作流将通路信息与文献证据转化为结�
 
 - **生物状态标注**：引入源/目标实体的生物状态 $\sigma_s, \sigma_t$（如突变、过表达、磷酸化），构建**状态感知的六元组 (State-aware Hexaplet)**：
 
-  $$T_{\text{final}} = (e_s, \sigma_s, r, e_t, \sigma_t, c)$$
+$$
+T_{\text{final}} = (e_s, \sigma_s, r, e_t, \sigma_t, c).
+$$
 
-  这种表述使基准能够区分细微但关键的机制差异（如蛋白丰度变化与翻译后修饰的区别）。
+这种表述使基准能够区分细微但关键的机制差异（如蛋白丰度变化与翻译后修饰的区别）。
 
 - **专家验证**：由分子生物学专家对知识图谱条目进行抽样核验，确保其准确性与证据一致性。
 
@@ -105,7 +110,9 @@ BIOME-Bench 的数据构建工作流将通路信息与文献证据转化为结�
 
 - **Task A (BII - 生物分子互作推理)**：预测给定通路背景 $p_i$、源实体及其状态、目标实体及其状态以及实验条件下的精准互作关系：
 
-  $$\hat{r} = \arg\max_{r \in \mathcal{R}} P(r \mid p_i, e_s, \sigma_s, e_t, \sigma_t, c)$$
+$$
+\hat{r} = \arg\max_{r \in \mathcal{R}} P\bigl(r \mid p_i, e_s, \sigma_s, e_t, \sigma_t, c\bigr).
+$$
 
 - **Task B (MPME - 多组学通路作用机制阐释)**：模拟真实的组学分析场景，给定通路背景 $p_i$ 和差异观测集 $E_{\text{diff}} \subseteq E_{\text{std}}$，要求模型生成能够解释分子间如何互相作用并导致表型后果的机制描述 $\hat{Y}$。
 
@@ -133,9 +140,10 @@ BIOME-Bench 的数据构建工作流将通路信息与文献证据转化为结�
 1. **LLM-as-a-Judge**: 使用 **Qwen3-32B** 作为裁判模型，根据 Ground Truth $M_{\text{text}}$ 对生成的解释 $\hat{Y}$ 在四个维度上进行评分（1-5 分）：**表型覆盖度 (Phenotype Coverage)**、**因果推理 (Causal Reasoning)**、**事实性 (Factuality)** 以及 **幻觉控制 (Hallucination Control)**。
 
 2. **结构化知识评估 (Structured Knowledge Evaluation)**: 基于文献派生的知识图谱，采用闭集评估协议。使用 **Qwen3-32B** 作为提取模型，仅允许从标准化知识图中选择元组来支撑解释 $\hat{Y}$，确保预测元组集 $\mathcal{T}_{\text{pred}} \subseteq \mathcal{T}_{\text{GT}}$。事实完整性通过 **Coverage** 衡量：
-   $$
-   \text{Coverage} = \frac{|\mathcal{T}_{\text{pred}}|}{|\mathcal{T}_{\text{GT}}|}
-   $$
+
+$$
+\text{Coverage} = \frac{|\mathcal{T}_{\text{pred}}|}{|\mathcal{T}_{\text{GT}}|}
+$$
 
 3. **语义嵌入相似度 (Semantic Embedding Similarity)**: 计算生成解释 $\hat{Y}$ 与标准机制文本 $M_{\text{text}}$ 向量表示之间的余弦相似度。
 

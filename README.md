@@ -49,7 +49,7 @@ BIOME-Bench transforms pathway information and literature evidence into a struct
 To ensure strong biological validity, the construction process begins with a rigorous literature acquisition stage. Let
 
 $$
-\mathcal{P} = {p_1, p_2, \dots, p_n}
+\mathcal{P} = \{p_1, p_2, \dots, p_n\}
 $$
 
 denote a predefined set of target KEGG pathways. Each pathway $p_i$ is characterized by its pathway name $N_{p_i}$ and associated species $S_{p_i}$.
@@ -212,6 +212,7 @@ For generated explanations, we adopt a multi-dimensional evaluation strategy:
 1. **LLM-as-a-Judge**: We use **Qwen3-32B** as the judge model. Given the ground-truth mechanism text $M_{\text{text}}$, it scores the generated explanation $\hat{Y}$ on four dimensions (1–5): **Phenotype Coverage**, **Causal Reasoning**, **Factuality**, and **Hallucination Control**.
 
 2. **Structured Knowledge Evaluation**: Based on the literature-derived knowledge graph, we adopt a closed-set protocol. We use **Qwen3-32B** as the extractor model and only allow tuples selected from the standardized knowledge graph to support $\hat{Y}$, ensuring $$\mathcal{T}_{\text{pred}} \subseteq \mathcal{T}_{\text{GT}}$$. Factual completeness is measured via **Coverage**:
+
 $$
 \text{Coverage} = \frac{|\mathcal{T}_{\text{pred}}|}{|\mathcal{T}_{\text{GT}}|}
 $$
