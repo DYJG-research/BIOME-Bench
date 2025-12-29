@@ -104,9 +104,8 @@ $$
 We retain a document only if it exceeds a strict relevance threshold:
 
 $$
-D_{\text{relevant}}(p_i)=\{\, d \in D_{\text{candidate}}(p_i) \mid f_{\theta}(d,p_i)\ge \alpha \,\}.
+E_{\text{std}}=\left\lbrace\phi(e)\;\mid\; e\in E_{\text{raw}} \ \wedge\ \forall e'\in E_{\text{raw}},\ \phi(e')\neq\emptyset\right\rbrace.
 $$
-
 
 In this work, we set $\alpha = 8$ to prioritize articles in which the target pathway is central and supported by explicit molecular and regulatory evidence.
 
