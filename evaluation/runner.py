@@ -318,6 +318,7 @@ def run_evaluation(args: RunArgs, command_line: str) -> Path:
             logger.info(
                 "Heartbeat: Done=%d/%d Pending=%d InFlight=%d Idle=%.1fs Last=%s (%s/%s)",
                 len(done_ids),
+                len(done_ids) + len(pending) + in_flight,
                 len(pending),
                 in_flight,
                 idle_s,
