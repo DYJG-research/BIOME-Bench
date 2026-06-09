@@ -214,8 +214,8 @@ $$
         <td>55.42</td><td>50.40</td><td>3.81</td><td>4.69</td><td>4.69</td><td>4.57</td><td>74.92</td><td>39.72</td><td>71.96</td>
       </tr>
       <tr style="border-bottom: 2px solid black;">
-        <td style="text-align: left; padding: 6px;">Intern-S1-235B</td>
-        <td>54.15</td><td>50.36</td><td>3.96</td><td>4.28</td><td>4.75</td><td>4.92</td><td>78.71</td><td>44.49</td><td><strong>73.24</strong></td>
+        <td style="text-align: left; padding: 6px;">S1-Base-671B</td>
+        <td>54.68</td><td>50.41</td><td><strong>4.02</strong></td><td>4.48</td><td><strong>4.76</strong></td><td><strong>4.83</strong></td><td>77.36</td><td>44.45</td><td><strong>73.59</strong></td>
       </tr>
     </tbody>
   </table>
@@ -359,16 +359,6 @@ python metrics/LLM-as-a-Judge.py \
   --output outputs/your_run/judge_results.jsonl \
   --threads 1
 ```
-
-## 🧠 进阶功能
-
-### Thinking Rules (`config/thinking_rules.json`)
-
-针对 Reasoning 模型（如 Qwen3）的特殊处理逻辑，支持动态注入 Prompt 前缀。
-
-### 断点恢复与重试 (Resume & Recovery)
-
-框架会自动在运行目录创建 `checkpoint.json`。若任务中断，重新执行相同命令或通过 `--resume-run-id` 即可恢复进度。
 
 ## 📂 项目结构
 

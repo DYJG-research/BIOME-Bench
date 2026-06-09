@@ -286,8 +286,8 @@ The table below summarizes model performance on BIOME-Bench:
         <td>55.42</td><td>50.40</td><td>3.81</td><td>4.69</td><td>4.69</td><td>4.57</td><td>74.92</td><td>39.72</td><td>71.96</td>
       </tr>
       <tr style="border-bottom: 2px solid black;">
-        <td style="text-align: left; padding: 6px;">Intern-S1-235B</td>
-        <td>54.15</td><td>50.36</td><td>3.96</td><td>4.28</td><td>4.75</td><td>4.92</td><td>78.71</td><td>44.49</td><td><strong>73.24</strong></td>
+        <td style="text-align: left; padding: 6px;">S1-Base-671B</td>
+        <td>54.68</td><td>50.41</td><td><strong>4.02</strong></td><td>4.48</td><td><strong>4.76</strong></td><td><strong>4.83</strong></td><td>77.36</td><td>44.45</td><td><strong>73.59</strong></td>
       </tr>
     </tbody>
   </table>
@@ -429,16 +429,6 @@ python metrics/LLM-as-a-Judge.py \
   --output outputs/your_run/judge_results.jsonl \
   --threads 1
 ```
-
-## 🧠 Advanced Features
-
-### Thinking Rules (`config/thinking_rules.json`)
-
-Special handling for reasoning models (e.g., Qwen3), supporting dynamic injection of prompt prefixes.
-
-### Resume & Recovery
-
-The framework automatically creates `checkpoint.json` in the run directory. If execution is interrupted, rerun the same command or use `--resume-run-id` to resume progress.
 
 ## 📂 Project Structure
 
